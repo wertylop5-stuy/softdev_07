@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, \
+		request, session, redirect, url_for
 import os
 
 master_username = "hello"
@@ -37,8 +38,15 @@ def root():
 	
 	return render_template("index.html", 
 				username=username)
+
+@app.route("/logout", methods=["POST"])
+def logout():
+	if SESSION_KEY in session.keys():
+		print "removed cookie"
+		session.pop(SESSION_KEY)
 	
-	return render_template("index.html")
+	#url_for takes the name of a function
+	return redirect(url_for("root"))
 
 if __name__ == "__main__":
 	app.debug = True
