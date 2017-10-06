@@ -14,6 +14,11 @@ app.secret_key = os.urandom(8)
 def root():
 	username = ""
 	password = ""
+	
+	if SESSION_KEY in session:
+		return render_template("index.html", 
+				username=session[SESSION_KEY])
+	
 	if request.method == "GET":
 		if request.args:
 			username = request.args["username"]
